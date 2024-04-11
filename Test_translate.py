@@ -1,9 +1,10 @@
 import requests
 import pytest
 from translations_list import translations
+from key_vault import token
 
 
-bearer_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI5MDU4MjU2MjIiLCJjaWQiOiJvcGVyYV9kZXNrdG9wIiwidmVyIjoiMiIsImlhdCI6IjE3MTA3NzMzNTYiLCJqdGkiOiJCRUloVzg1ZUs0MTcxMDc3Njk1NiJ9.8ZYNJlUvK0hydpo9nODKmSgDzshYPxjPBDKpolr8AI0'
+bearer_token = token
 
 endpoint_url = "https://composer.opera-api.com/api/v1/prompts/translate"
 headers = {
