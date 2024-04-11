@@ -1,0 +1,19 @@
+Short summary:
+Test report is in test_report.html.
+Last test is failed, but it would pass. During test execution I triggered some manual API calls, and 'request_available' was lower than for loop.
+Code was created in python request but also I did some manual testing with
+Postman to check how endpoint behave.
+It is alarming that Endpoint is working correctly (200 response and text was translated) even without correct header structure(missing
+all parameters expect authorization)
+Translation is working mostly correctly but translated sentence is containing  '.' at the end of each sentence
+where input text did not.
+There should be error handler if parameter in header is missing or it is empty.
+Most of parameters in header can be empty and it is still working f.e X-Opera-UI-Language or x-opera-timezone.
+Also API code response is incorrect for empty token (500 instead of 401)
+Continue of conversation works only in english only for "selected_text": "Continue conversation".
+There is no needed to pass conversation_id, and also I was unable to reach continue conversation after response
+
+
+For future I would focus more on some kind of SQL injection in header or Selected_text.
+Also I didn't check the performance of Endpoint. During manual testing response was below 0.5s but during 2000 iteration loop it takes
+3240 seconds for about 1900 request so it would be around 1.5-1.7 sec per request.

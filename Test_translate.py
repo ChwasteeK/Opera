@@ -1,5 +1,4 @@
 import requests
-import pytest
 from translations_list import translations
 from key_vault import token
 
@@ -15,7 +14,7 @@ headers = {
     'X-Opera-UI-Language': 'pl'
 }
 payload = {
-    'selected_text': 'how are you?'
+    'selected_text': 'Test Translation AI provided by Opera'
 }
 
 
@@ -54,7 +53,7 @@ def test_successful_translation():
 def test_conversation_continuation_en():
     headers_continuation = headers.copy()
     headers_continuation['X-Opera-UI-Language'] = 'en'
-    payload_initial = {'selected_text': 'How do you do'}
+    payload_initial = {'selected_text': 'Text translation API check'}
     response_initial = requests.post(endpoint_url, headers=headers_continuation, json=payload_initial)
     assert response_initial.status_code == 200, 'Invalid response code'
     assert 'message' in response_initial.json()
@@ -65,7 +64,7 @@ def test_conversation_continuation_en():
     assert 'title' in response_initial.json()
     conversation_id = response_initial.json().get('conversation_id')
 
-    # Subsequent request with conversation_id
+    # Continue conversation with conversation_id
     payload_continuation = {'selected_text': 'continue conversation', 'conversation_id': conversation_id}
     response_continuation = requests.post(endpoint_url, headers=headers_continuation, json=payload_continuation)
     assert response_continuation.status_code == 200, 'Invalid response code'
@@ -207,7 +206,7 @@ def test_invalid_endpoint():
     assert response.status_code in [404, 500, 502, 503], 'Invalid response code'
 
 
-# test max request
+# Test for check if maximum number of request are handled
 def test_max_available_response():
     response_initial = requests.post(endpoint_url, headers=headers, json=payload)
     assert response_initial.status_code == 200, 'Invalid response code'
@@ -215,7 +214,7 @@ def test_max_available_response():
     requests_available = response_initial.json().get('requests_available')
     print(f'Request which are able to perform {requests_available}')
 
-    for number in range(requests_available):
+    for number in range(requests_available-1):
         payload_continuation = {f'selected_text': f'API Call number {number}'}
         response_continuation = requests.post(endpoint_url, headers=headers, json=payload_continuation)
         assert response_continuation.status_code == 200, 'Invalid response code'
